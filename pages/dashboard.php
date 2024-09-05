@@ -4,7 +4,7 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ../pages');
     exit();
 }
 
@@ -48,7 +48,7 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </button>
                 </div>
                 <div class="profile-image-container">
-                    <img src="<?php echo "../" . htmlspecialchars($user['profile_image'] ?? '../assets/imgs/default-profile.png'); ?>"
+                    <img src="../<?php echo "../" . htmlspecialchars($user['profile_image'] ?? '../assets/imgs/default-profile.png'); ?>"
                         alt="Profile Picture" class="profile-image">
                     </div>
                     <button class="change-profile-image" title="Change Profile Picture">
@@ -95,7 +95,7 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <button class="btn-change" data-field="address">Change</button>
                     </div>
                 </div>
-                <button id="change-password" class="btn-change-password">Change Password</button>
+                <button id="change-password" class="btn-change-password" style="display: block; margin: 30px auto;">Change Password</button>
             </section>
 
             <section id="menu" class="dashboard-section">
