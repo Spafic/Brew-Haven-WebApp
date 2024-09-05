@@ -2,9 +2,12 @@
 require_once '../php/helpers/sessionConfig.php'; // Assuming you have a config file with session configuration
 require_once '../database/db_connection.php'; // Assuming you have a config file with database connection details
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'staff' && $_SESSION['role'] !== 'customer')) {
     header('Location: ../pages');
+    exit();
+}
+if ($_SESSION['role'] == 'staff' && $_SESSION['role'] !== 'customer') {
+    header('Location: ../pages/admin_dashboard.php');
     exit();
 }
 
@@ -33,27 +36,29 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brew Haven Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 
 <body>
-<div id="message-container"></div>
+    <div id="message-container"></div>
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="parent-container" style="display: flex; justify-content: center;">
-                    <button class="sidebar-toggle" style="margin-bottom:50px; margin-top:20px;" aria-label="Toggle Sidebar">
+                    <button class="sidebar-toggle" style="margin-bottom:50px; margin-top:20px;"
+                        aria-label="Toggle Sidebar">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
                 <div class="profile-image-container">
                     <img src="../<?php echo "../" . htmlspecialchars($user['profile_image'] ?? '../assets/imgs/default-profile.png'); ?>"
                         alt="Profile Picture" class="profile-image">
-                    </div>
-                    <button class="change-profile-image" title="Change Profile Picture">
-                        <i class="fas fa-camera"></i>
-                    </button>
+                </div>
+                <button class="change-profile-image" title="Change Profile Picture">
+                    <i class="fas fa-camera"></i>
+                </button>
                 <h2 class="user-name"><?php echo htmlspecialchars($user['name']); ?></h2>
                 <nav class="sidebar-nav">
                     <ul>
@@ -95,7 +100,8 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <button class="btn-change" data-field="address">Change</button>
                     </div>
                 </div>
-                <button id="change-password" class="btn-change-password" style="display: block; margin: 30px auto;">Change Password</button>
+                <button id="change-password" class="btn-change-password"
+                    style="display: block; margin: 30px auto;">Change Password</button>
             </section>
 
             <section id="menu" class="dashboard-section">
@@ -146,8 +152,8 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </main>
     </div>
 
-<!-- Password Change Modal -->
-<div id="password-modal" class="modal">
+    <!-- Password Change Modal -->
+    <div id="password-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Change Password</h2>
@@ -170,24 +176,33 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 
-<!-- User Info Change Modal -->
-<div id="user-info-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Update Information</h2>
-        <form id="user-info-form">
-            <div class="form-group">
-                <label for="update-field">Field:</label>
-                <span id="update-field"></span>
-            </div>
-            <div class="form-group">
-                <label for="update-value">New Value:</label>
-                <input type="text" id="update-value" name="update-value" required>
-            </div>
-            <button type="submit" class="btn-update">Update</button>
-        </form>
+    <!-- User Info Change Modal -->
+    <div id="user-info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Update Information</h2>
+            <form id="user-info-form">
+                <div class="form-group">
+                    <label for="update-field">Field:</label>
+                    <span id="update-field"></span>
+                </div>
+                <div class="form-group">
+                    <label for="update-value">New Value:</label>
+                    <input type="text" id="update-value" name="update-value" required>
+                </div>
+                <button type="submit" class="btn-update">Update</button>
+            </form>
+        </div>
     </div>
-</div>
+
+    <!-- Order Details Modal -->
+    <div id="order-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Order Details</h2>
+            <div id="order-details-content"></div>
+        </div>
+    </div>
 
     <script src="../assets/js/dashboard.js"></script>
 </body>

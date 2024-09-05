@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.querySelector(`[data-field="${field}"]`).previousElementSibling.textContent = data[field];
                     userInfoModal.style.display = 'none';
                     showMessage(`${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully`, 'success');
+                    if (field === 'name') {
+                        updateUserName(data[field]);
+                    }
                 }
             })
             .catch(error => {
@@ -99,6 +102,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 showMessage('An error occurred while updating the user information. Please try again later.', 'error');
             });
     });
+
+    function updateUserName(newName) {
+        const userNameElement = document.querySelector('.user-name');
+        if (userNameElement) {
+            userNameElement.textContent = newName;
+        }
+    }
 
     function validateField(field, value) {
         switch (field) {
@@ -274,32 +284,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showMessage('Item removed from cart', 'error');
     }
 
-    // Place order functionality
-    const placeOrderButton = document.getElementById('place-order');
-    placeOrderButton.addEventListener('click', function () {
-        if (cart.length === 0) {
-            showMessage('Your cart is empty. Add some items before placing an order.', 'error');
-            return;
-        }
-
-        // Here you would typically send an AJAX request to process the order
-        // For this example, we'll just clear the cart and show a message
-        showMessage('Order placed successfully!', 'success');
-        cart = [];
-        updateCartUI();
-    });
-
-    // Order history functionality
-    const orderDetailsButtons = document.querySelectorAll('.btn-order-details');
-    orderDetailsButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const orderId = this.dataset.orderId;
-            // Here you would typically fetch order details via AJAX
-            // For this example, we'll just show a message
-            showMessage(`Fetching details for Order ID: ${orderId}`, 'info');
-        });
-    });
-
     function showMessage(message, type) {
         const messageContainer = document.getElementById('message-container');
         const messageElement = document.createElement('div');
@@ -382,4 +366,157 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add this to your initialization code (e.g., in the DOMContentLoaded event listener)
     profileImage.dataset.originalSrc = profileImage.src;
+
+
+    // Place order functionality
+    const placeOrderButton = document.getElementById('place-order');
+    placeOrderButton.addEventListener('click', function () {
+        if (cart.length === 0) {
+            showMessage('Your cart is empty. Add some items before placing an order.', 'error');
+            return;
+        }
+
+        const orderData = {
+            action: 'create_order',
+            items: cart
+        };
+
+        fetch('../php/order_management.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(`Order placed successfully! Order ID: ${data.order_id}`, 'success');
+                    cart = [];
+                    updateCartUI();
+                    updateOrderHistory();
+                } else {
+                    showMessage(`Failed to place order: ${data.error}`, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error placing order:', error);
+                showMessage('An error occurred while placing the order. Please try again later.', 'error');
+            });
+    });
+
+    function updateOrderHistory() {
+        const orderHistoryContainer = document.querySelector('.order-history-container');
+
+        fetch('../php/order_management.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action: 'get_user_order_history' })
+        })
+            .then(response => response.json())
+            .then(orders => {
+                orderHistoryContainer.innerHTML = '';
+                orders.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.classList.add('order-item');
+                    orderElement.innerHTML = `
+                        <p>Order ID: ${order.order_id}</p>
+                        <p>Date: ${new Date(order.order_date).toLocaleString()}</p>
+                        <p>Status: <span class="order-status ${order.status}">${order.status}</span></p>
+                        <p>Total Amount: $${parseFloat(order.total_amount).toFixed(2)}</p>
+                        <button class="btn-order-details" data-order-id="${order.order_id}">View Details</button>
+                    `;
+                    orderHistoryContainer.appendChild(orderElement);
+                });
+
+                attachOrderDetailsListeners();
+            })
+            .catch(error => {
+                console.error('Error fetching order history:', error);
+                showMessage('An error occurred while fetching the order history. Please try again later.', 'error');
+            });
+    }
+
+    function attachOrderDetailsListeners() {
+        const orderDetailsButtons = document.querySelectorAll('.btn-order-details');
+        orderDetailsButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const orderId = this.dataset.orderId;
+                fetchOrderDetails(orderId);
+            });
+        });
+    }
+
+    function fetchOrderDetails(orderId) {
+        fetch('../php/order_management.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action: 'get_order_details', order_id: orderId })
+        })
+            .then(response => response.json())
+            .then(details => {
+                displayOrderDetails(details);
+            })
+            .catch(error => {
+                console.error('Error fetching order details:', error);
+                showMessage('An error occurred while fetching the order details. Please try again later.', 'error');
+            });
+    }
+
+    function displayOrderDetails(details) {
+        const modal = document.getElementById('order-details-modal');
+        const modalContent = document.getElementById('order-details-content');
+
+        let itemsHtml = '';
+        details.items.forEach(item => {
+            itemsHtml += `
+            <tr>
+                <td>${item.item_name}</td>
+                <td>${item.quantity}</td>
+                <td>$${parseFloat(item.price).toFixed(2)}</td>
+                <td>$${(item.quantity * item.price).toFixed(2)}</td>
+            </tr>
+        `;
+        });
+
+        modalContent.innerHTML = `
+            <p>Order ID: ${details.order_id}</p>
+            <p>Date: ${new Date(details.order_date).toLocaleString()}</p>
+            <p>Status: <span class="order-status ${details.status.toLowerCase()}">${details.status}</span></p>
+            <p>Contact Info: ${details.contact_info}</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${itemsHtml}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="total_price">Total Price</td>
+                        <td class="total_price">$${parseFloat(details.total_amount).toFixed(2)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        `;
+
+        modal.style.display = 'block';
+
+        const closeButton = modal.querySelector('.close');
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+
+    // Call updateOrderHistory when the page loads
+    updateOrderHistory();
 });

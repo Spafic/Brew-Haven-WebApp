@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS orders (
     status ENUM('pending', 'preparing', 'completed', 'canceled') DEFAULT 'pending',
     contact_info VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
+    total_amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00
 );
 
 -- Order Items Table
