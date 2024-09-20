@@ -248,7 +248,7 @@ nav ul li a:hover::after {
 
 .about-image {
     height: 600px; /* Increased height */
-    background-image: url('../imgs/hero-bg.jpg');
+    background-image: url('../imgs/OurStory.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 10px;

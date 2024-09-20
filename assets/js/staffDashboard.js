@@ -343,7 +343,7 @@ function removeItem(itemId) {
                         <tfoot>
                             <tr>
                                 <td colspan="3"><strong>Total Price:</strong></td>
-                                <td><strong>$${parseFloat(order.total_amount).toFixed(2)}</strong></td>
+                                <td class="total_price"> <strong>$${parseFloat(order.total_amount).toFixed(2)}</strong></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -452,26 +452,63 @@ function removeItem(itemId) {
         window.requestAnimationFrame(step);
     }
 
-    // Stats Animations and Fetching 
-    
-    // Function to fetch stats and animate count
-    function updateStats() {
+    // Stats Animations
+    function animateCount(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            element.textContent = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    function animateProfit(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentValue = progress * (end - start) + start;
+            element.textContent = `$${currentValue.toFixed(2)}`;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    function initializeStatAnimations() {
+        const totalUsers = document.getElementById('total-users');
+        const totalItems = document.getElementById('total-items');
+        const completedOrders = document.getElementById('completed-orders');
+        const totalProfit = document.getElementById('total-profit');
+
+        animateCount(totalUsers, 0, parseInt(totalUsers.dataset.value), 2000);
+        animateCount(totalItems, 0, parseInt(totalItems.dataset.value), 2000);
+        animateCount(completedOrders, 0, parseInt(completedOrders.dataset.value), 2000);
+        animateProfit(totalProfit, 0, parseFloat(totalProfit.dataset.value), 2000);
+    }
+
+    // Call initializeStatAnimations when the page loads
+    initializeStatAnimations();
+
+    // Refresh data periodically
+    setInterval(refreshData, 60000); // Refresh every minute
+
+    function refreshData() {
         fetch('../php/admin/stats_handler.php')
             .then(response => response.json())
             .then(stats => {
-                animateCount(document.getElementById('total-users'), 0, stats.users, 2000);
-                animateCount(document.getElementById('total-items'), 0, stats.items, 2000);
-                animateCount(document.getElementById('completed-orders'), 0, stats.orders, 2000);
-                
-                const profitElement = document.getElementById('total-profit');
-                animateCount(profitElement, 0, parseFloat(stats.orders_profit), 2000);
+                animateCount(document.getElementById('total-users'), parseInt(document.getElementById('total-users').textContent), stats.users, 1000);
+                animateCount(document.getElementById('total-items'), parseInt(document.getElementById('total-items').textContent), stats.items, 1000);
+                animateCount(document.getElementById('completed-orders'), parseInt(document.getElementById('completed-orders').textContent), stats.orders, 1000);
+                animateProfit(document.getElementById('total-profit'), parseFloat(document.getElementById('total-profit').textContent.replace('$', '')), stats.orders_profit, 1000);
             })
-            .catch(error => console.error('Error fetching stats:', error));
+            .catch(error => console.error('Error:', error));
     }
-
-    // Call updateStats on load
-    updateStats();
-    
     
     // Chart functionality
     function initializeCharts() {
@@ -496,8 +533,20 @@ function removeItem(itemId) {
             });
     }
 
+    // Graphs Function ...
+    
     function createMonthlyOverviewChart(data) {
         const ctx = document.getElementById('monthlyOverviewChart').getContext('2d');
+        
+        // Create gradient backgrounds for the lines
+        const gradientOrders = ctx.createLinearGradient(0, 0, 0, 400);
+        gradientOrders.addColorStop(0, 'rgba(255, 99, 132, 0.5)');
+        gradientOrders.addColorStop(1, 'rgba(255, 99, 132, 0)');
+    
+        const gradientRevenue = ctx.createLinearGradient(0, 0, 0, 400);
+        gradientRevenue.addColorStop(0, 'rgba(54, 162, 235, 0.5)');
+        gradientRevenue.addColorStop(1, 'rgba(54, 162, 235, 0)');
+    
         new Chart(ctx, {
             type: 'line',
             data: {
@@ -505,19 +554,38 @@ function removeItem(itemId) {
                 datasets: [{
                     label: 'Orders',
                     data: data.map(item => item.orders),
-                    borderColor: '#3a1f0d',
-                    tension: 0.1
+                    borderColor: '#FF6384', // Soft red
+                    backgroundColor: gradientOrders, // Gradient fill
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#FF6384', // Point color
+                    pointBorderColor: '#FF6384',
+                    pointRadius: 5, // Larger points
+                    pointHoverRadius: 7 // Larger hover radius
                 }, {
                     label: 'Revenue',
                     data: data.map(item => item.revenue),
-                    borderColor: '#c7a17a',
-                    tension: 0.1
+                    borderColor: '#36A2EB', // Soft blue
+                    backgroundColor: gradientRevenue, // Gradient fill
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#36A2EB', // Point color
+                    pointBorderColor: '#36A2EB',
+                    pointRadius: 5, // Larger points
+                    pointHoverRadius: 7 // Larger hover radius
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
                     y: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#333' // Darker text for better readability
+                        }
+                    }
                 }
             }
         });
@@ -525,13 +593,29 @@ function removeItem(itemId) {
 
     function createProfitDistributionChart(data) {
         const ctx = document.getElementById('profitDistributionChart').getContext('2d');
+    
+        // Define the colors for each category
+        const categoryColors = {
+            'hot': '#FF6384', // Red
+            'cold': '#36A2EB', // Blue
+            'default': '#4BC0C0' // Deep coffee brown for other categories
+        };
+        // '#36A2EB', // Soft blue
+        // '#9966FF',  // Soft purple
+        // '#FF6384', // Soft red
+        // '#FFCE56', // Soft yellow
+        // '#4BC0C0' // Soft teal
+    
         new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: data.map(item => item.category),
                 datasets: [{
                     data: data.map(item => item.profit),
-                    backgroundColor: ['#3a1f0d', '#c7a17a', '#e6b17e', '#f9f3e9']
+                    backgroundColor: data.map(item => {
+                        const category = item.category.toLowerCase();
+                        return categoryColors[category] || categoryColors['default'];
+                    })
                 }]
             },
             options: {
@@ -542,6 +626,7 @@ function removeItem(itemId) {
             }
         });
     }
+    
 
     function createTopSellingItemsChart(data) {
         const ctx = document.getElementById('topSellingItemsChart').getContext('2d');
@@ -552,13 +637,26 @@ function removeItem(itemId) {
                 datasets: [{
                     label: 'Units Sold',
                     data: data.map(item => item.total_sold),
-                    backgroundColor: '#c7a17a'
+                    backgroundColor: data.map((item, index) => {
+                        // Alternate colors for better visual distinction
+                        const colors = ['#FF6384', '#4BC0C0', '#FFCE56']; // Soft red, soft blue, green
+                        return colors[index % colors.length];
+                    }),
+                    borderColor: '#3a1f0d', // Deep coffee brown for the border
+                    borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
                     y: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#333' // Darker text for better readability
+                        }
+                    }
                 }
             }
         });
@@ -572,7 +670,7 @@ function removeItem(itemId) {
                 labels: data.map(item => item.status),
                 datasets: [{
                     data: data.map(item => item.count),
-                    backgroundColor: ['#3a1f0d', '#c7a17a', '#e6b17e', '#f9f3e9']
+                    backgroundColor: ['#FFCE56', '#4BC0C0', '#5cb86e', '#FF6384']
                 }]
             },
             options: {

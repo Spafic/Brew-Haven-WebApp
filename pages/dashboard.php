@@ -110,7 +110,7 @@ $order_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="menu-grid">
                     <?php foreach ($menu_items as $item): ?>
                         <div class="menu-item" data-id="<?php echo $item['item_id']; ?>">
-                            <img src="<?php echo htmlspecialchars($item['product_image']); ?>"
+                            <img src="../<?php echo htmlspecialchars($item['product_image']); ?>"
                                 alt="<?php echo htmlspecialchars($item['name']); ?>" class="menu-item-image">
                             <h3><?php echo htmlspecialchars($item['name']); ?></h3>
                             <p><?php echo htmlspecialchars($item['description']); ?></p>

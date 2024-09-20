@@ -40,12 +40,12 @@ $orders = fetchOrders($pdo);
         <div class="sidebar">
             <div class="sidebar-header">
                 <button class="sidebar-toggle"><i class="fas fa-bars"></i></button>
-                <span class="user-name">Admin</span>
+                <span class="user-name">Staff</span>
             </div>
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="#stats" class="active"><i class="fas fa-chart-line"></i> <span>Statistics</span></a></li>
-                    <li><a href="#users"><i class="fas fa-users"></i> <span>Staff Members</span></a></li>
+                    <li><a href="#users"><i class="fas fa-users"></i> <span>Users</span></a></li>
                     <li><a href="#items"><i class="fas fa-boxes"></i> <span>Items</span></a></li>
                     <li><a href="#orders"><i class="fas fa-file-invoice"></i> <span>Orders</span></a></li>
                 </ul>
@@ -54,7 +54,7 @@ $orders = fetchOrders($pdo);
 
         <!-- Main Content -->
         <div class="main-content">
-            
+
             <!-- Stats Section -->
             <section id="stats" class="dashboard-section active">
                 <h2>Statistics Overview</h2>
@@ -62,22 +62,22 @@ $orders = fetchOrders($pdo);
                     <div class="stat-item">
                         <h3>Total Users</h3>
                         <i class="fas fa-user"></i>
-                        <p id="total-users"><?= $stats['users'] ?></p>
+                        <p id="total-users" data-value="<?= $stats['users'] ?>">0</p>
                     </div>
                     <div class="stat-item">
                         <h3>Total Items</h3>
                         <i class="fas fa-box"></i>
-                        <p id="total-items"><?= $stats['items'] ?></p>
+                        <p id="total-items" data-value="<?= $stats['items'] ?>">0</p>
                     </div>
                     <div class="stat-item">
                         <h3>Completed Orders</h3>
                         <i class="fas fa-check-circle"></i>
-                        <p id="completed-orders"><?= $stats['orders'] ?></p>
+                        <p id="completed-orders" data-value="<?= $stats['orders'] ?>">0</p>
                     </div>
                     <div class="stat-item">
                         <h3>Total Profit</h3>
                         <i class="fas fa-dollar-sign"></i>
-                        <p id="total-profit">$<?= number_format($stats['orders_profit'], 2) ?></p>
+                        <p id="total-profit" data-value="<?= $stats['orders_profit'] ?>">$0.00</p>
                     </div>
                 </div>
                 <div class="charts-container">
@@ -100,9 +100,9 @@ $orders = fetchOrders($pdo);
                 </div>
             </section>
 
-            <!-- Staff Section -->
+            <!-- Users Section -->
             <section id="users" class="dashboard-section">
-                <h2>Staff Members</h2>
+                <h2>Members</h2>
                 <div id="user-info-grid" class="user-info-grid">
                     <?php foreach ($users as $user) : ?>
                         <div class="user-info-item">
@@ -175,48 +175,45 @@ $orders = fetchOrders($pdo);
 
     <!-- User edit modal -->
     <div id="user-edit-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content edit-modal">
             <div class="modal-header">
                 <h2>Edit Staff Member</h2>
                 <span class="close">&times;</span>
             </div>
-            <form id="user-edit-form">
+            <form id="user-edit-form" class="compact-form">
                 <input type="hidden" id="user-id" name="user_id">
-                
-                <div class="form-group">
-                    <label for="user-name">Name:</label>
-                    <input type="text" id="user-name" name="name" required>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="user-name">Name:</label>
+                        <input type="text" id="user-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-email">Email:</label>
+                        <input type="email" id="user-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-phone">Phone:</label>
+                        <input type="text" id="user-phone" name="phone_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-role">Role:</label>
+                        <select id="user-role" name="role" required>
+                            <option value="customer">Customer</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="user-email">Email:</label>
-                    <input type="email" id="user-email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="user-phone">Phone:</label>
-                    <input type="text" id="user-phone" name="phone_number" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="user-role">Role:</label>
-                    <select id="user-role" name="role" required>
-                        <option value="customer">Customer</option>
-                        <option value="staff">Staff</option>
-                    </select>
-                </div>
-                
                 <div class="form-group">
                     <label for="user-address">Address:</label>
                     <input type="text" id="user-address" name="address">
                 </div>
-                
                 <div class="form-actions">
                     <button type="submit" class="btn-update">Update</button>
                 </div>
             </form>
         </div>
     </div>
+
 
     <!-- Item Add/Edit Modal -->
     <div id="item-modal" class="modal">
@@ -241,7 +238,7 @@ $orders = fetchOrders($pdo);
                 </div>
                 <div class="form-group">
                     <label for="item-description">Description:</label>
-                    <textarea id="item-description" name="description" required style="width: 100%; height: 100px; resize: vertical;"></textarea>
+                    <textarea id="item-description" name="description" required rows="2" style="width: 100%; resize: none;"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="item-image">Product Image:</label>

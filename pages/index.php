@@ -111,17 +111,17 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
                 <h2 class="fade-in-up">Seasonal Specials</h2>
                 <div class="specials-grid">
                     <div class="special-item fade-in-up">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Pumpkin Spice Latte">
+                        <img src="../assets/imgs/PumpkinSpiceLatte.jpg" alt="Pumpkin Spice Latte">
                         <h3>Pumpkin Spice Latte</h3>
                         <p>Fall favorite with a Brew Haven twist</p>
                     </div>
                     <div class="special-item fade-in-up">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Iced Caramel Macchiato">
+                        <img src="../assets/imgs/IcedCaramelMacchiato.jpg" alt="Iced Caramel Macchiato">
                         <h3>Iced Caramel Macchiato</h3>
                         <p>Perfect summer refreshment</p>
                     </div>
                     <div class="special-item fade-in-up">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Mint Mocha">
+                        <img src="../assets/imgs/MintMocha.jpg" alt="Mint Mocha">
                         <h3>Mint Mocha</h3>
                         <p>Cool and indulgent winter warmer</p>
                     </div>
@@ -133,21 +133,21 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
             <div class="section-content">
                 <h2 class="fade-in">Coffee Moments</h2>
                 <div class="gallery-grid">
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/gallary8.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/matcha.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/gallary3.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/caramelfrappe.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/gallary2.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/gallary6.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/BlueBerry.jpg');">
                     </div>
-                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/hero-bg.jpg');">
+                    <div class="gallery-item fade-in" style="background-image: url('../assets/imgs/gallary7.jpg');">
                     </div>
                 </div>
             </div>
@@ -203,7 +203,7 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
                                 ambiance make it my favorite spot in the city. It's not just coffee; it's an experience.
                             </p>
                             <div class="customer-info">
-                                <img src="../assets/imgs/hero-bg.jpg" alt="Sarah M." class="customer-image">
+                                <img src="../assets/imgs/sarah.jpg" alt="Sarah M." class="customer-image">
                                 <div class="customer-details">
                                     <div class="customer-name">Sarah M.</div>
                                     <div class="customer-title">Creative Director</div>
@@ -214,7 +214,7 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
                             <p>I've never tasted coffee this good! The baristas are true artists, and their passion
                                 shows in every cup. Brew Haven has completely changed my coffee experience.</p>
                             <div class="customer-info">
-                                <img src="../assets/imgs/hero-bg.jpg" alt="John D." class="customer-image">
+                                <img src="../assets/imgs/john.jpg" alt="John D." class="customer-image">
                                 <div class="customer-details">
                                     <div class="customer-name">John D.</div>
                                     <div class="customer-title">Software Engineer</div>
@@ -226,7 +226,7 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
                                 great coffee while knowing that it's responsibly sourced and served. Keep up the
                                 fantastic work!</p>
                             <div class="customer-info">
-                                <img src="../assets/imgs/hero-bg.jpg" alt="Emma L." class="customer-image">
+                                <img src="../assets/imgs/emma.jpg" alt="Emma L." class="customer-image">
                                 <div class="customer-details">
                                     <div class="customer-name">Emma L.</div>
                                     <div class="customer-title">Environmental Scientist</div>
@@ -248,17 +248,17 @@ require_once '../database/db_connection.php'; // Assuming you have a config file
                 <h2 class="fade-in">From Bean to Cup</h2>
                 <div class="process-grid">
                     <div class="process-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Sourcing">
+                        <img src="../assets/imgs/EthicalSourcing.jpg" alt="Coffee Sourcing">
                         <h3>Ethical Sourcing</h3>
                         <p>We partner directly with farmers to ensure fair prices and sustainable practices.</p>
                     </div>
                     <div class="process-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Roasting">
+                        <img src="../assets/imgs/ArtisanalRoasting.jpg" alt="Coffee Roasting">
                         <h3>Artisanal Roasting</h3>
                         <p>Our master roasters bring out the unique flavors of each bean origin.</p>
                     </div>
                     <div class="process-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Brewing">
+                        <img src="../assets/imgs/PreciseBrewing.jpg" alt="Coffee Brewing">
                         <h3>Precise Brewing</h3>
                         <p>We use state-of-the-art equipment and techniques to brew the perfect cup every time.</p>
                     </div>

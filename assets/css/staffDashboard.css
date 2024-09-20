@@ -421,21 +421,14 @@ body {
 .modal-content {
     background-color: var(--bg-color);
     border-radius: 10px;
-
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     animation: slideIn 0.3s ease-in-out;
-
-    margin: 5% auto 10% auto;
+    margin: 5% auto;
     padding: 30px;
     max-height: 80vh;
-    overflow-y: auto;
-    
-    max-height: 75vh;
-    width: 500px;
-    max-width: 500px; /* Add a max-width to ensure consistency across different screen sizes */
-
-    overflow-y: auto;
+    width: 90%;
+    max-width: 500px; /* Set a consistent max-width for all modals */
 }
 
 .modal-header {
@@ -474,21 +467,31 @@ body {
     color: var(--primary-color);
 }
 
+.compact-form .modal-header{
+    max-width: auto;
+}
+
+.edit-modal{
+    max-width: 500px !important;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: 500;
     color: var(--primary-color);
+    max-width: auto;
 }
 
 .form-group input,
 .form-group select {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     border: 1px solid var(--gray);
     border-radius: 4px;
     font-family: 'Poppins', sans-serif;
     transition: border-color 0.3s;
+    max-width: auto;
 }
 
 .form-group input:focus,
@@ -736,6 +739,7 @@ h2 {
         padding: 8px;
     }
 
+    /* Charts */
     .charts-container {
         gap: 20px;
         padding: 0 10px;
@@ -745,4 +749,28 @@ h2 {
         height: 350px;
         padding: 15px;
     }
+}
+
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
 }
