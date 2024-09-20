@@ -5,6 +5,7 @@ header("Status: 503 Service Unavailable");
 
 // Retrieve the message from the URL parameter
 $msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,7 @@ $msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Service Unavailable</title>
     <style>
         :root {
@@ -88,6 +90,16 @@ $msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
             transform: translateY(0);
         }
 
+        .icons {
+            margin-top: 1em;
+        }
+
+        .icons i {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin: 0 0.5em;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -102,8 +114,8 @@ $msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
 </head>
 <body>
     <div class="container">
-        <h1>Error 500</h1>
-        <h4>Internal Server Error</h4>
+        <img src="../../assets/imgs/errors/error500.png" alt="Error 500">
+        <h4> <i class="fas fa-mug-hot"></i> Internal Server Error</h4>
         <p class="message">We are currently performing maintenance on the site. Please try again later. We appreciate your patience.</p>
     </div>
 </body>

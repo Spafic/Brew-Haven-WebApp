@@ -1,5 +1,6 @@
 <?php
 require_once '../php/helpers/sessionConfig.php';
+require_once '../database/db_connection.php'; // Assuming you have a config file with database connection details
 ?>
 
 <!DOCTYPE html>
@@ -25,12 +26,16 @@ require_once '../php/helpers/sessionConfig.php';
         <nav>
             <div class="logo">Brew Haven</div>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#hero">Home</a></li> <!-- Correct ID: #hero -->
+                <li><a href="#about">About</a></li> <!-- Correct ID: #about -->
+                <li><a href="#featured-products">Menu</a></li> <!-- Correct ID: #featured-products -->
+                <li><a href="#seasonal-specials">Specials</a></li> <!-- Correct ID: #seasonal-specials -->
+                <li><a href="#gallery">Gallery</a></li> <!-- Correct ID: #gallery -->
+                <li><a href="#our-story">Our Story</a></li> <!-- Correct ID: #our-story -->
+                <li><a href="#testimonials">Testimonials</a></li> <!-- Correct ID: #testimonials -->
+                <li><a href="#coffee-process">Coffee Process</a></li> <!-- Correct ID: #coffee-process -->
             </ul>
+
             <div class="auth-buttons">
                 <button id="loginBtn" class="auth-btn">Login</button>
                 <button id="registerBtn" class="auth-btn">Register</button>
@@ -101,7 +106,6 @@ require_once '../php/helpers/sessionConfig.php';
             </div>
         </section>
 
-
         <section id="seasonal-specials">
             <div class="section-content">
                 <h2 class="fade-in-up">Seasonal Specials</h2>
@@ -120,30 +124,6 @@ require_once '../php/helpers/sessionConfig.php';
                         <img src="../assets/imgs/hero-bg.jpg" alt="Mint Mocha">
                         <h3>Mint Mocha</h3>
                         <p>Cool and indulgent winter warmer</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="coffee-workshops">
-            <div class="section-content">
-                <h2 class="fade-in-up">Coffee Workshops</h2>
-                <p class="fade-in-up">Join our expert baristas for hands-on learning experiences</p>
-                <div class="workshops-grid">
-                    <div class="workshop-item fade-in-up">
-                        <h3>Latte Art Masterclass</h3>
-                        <p>Learn to create stunning designs in your lattes</p>
-                        <a href="#" class="btn-secondary">Book Now</a>
-                    </div>
-                    <div class="workshop-item fade-in-up">
-                        <h3>Home Brewing Techniques</h3>
-                        <p>Perfect your at-home coffee brewing skills</p>
-                        <a href="#" class="btn-secondary">Book Now</a>
-                    </div>
-                    <div class="workshop-item fade-in-up">
-                        <h3>Coffee Tasting 101</h3>
-                        <p>Develop your palate and appreciate coffee nuances</p>
-                        <a href="#" class="btn-secondary">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -213,29 +193,6 @@ require_once '../php/helpers/sessionConfig.php';
             </div>
         </section>
 
-        <section id="coffee-process">
-            <div class="section-content">
-                <h2 class="fade-in">From Bean to Cup</h2>
-                <div class="process-grid">
-                    <div class="process-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Sourcing">
-                        <h3>Ethical Sourcing</h3>
-                        <p>We partner directly with farmers to ensure fair prices and sustainable practices.</p>
-                    </div>
-                    <div class="process-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Roasting">
-                        <h3>Artisanal Roasting</h3>
-                        <p>Our master roasters bring out the unique flavors of each bean origin.</p>
-                    </div>
-                    <div class="process-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Brewing">
-                        <h3>Precise Brewing</h3>
-                        <p>We use state-of-the-art equipment and techniques to brew the perfect cup every time.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="testimonials">
             <div class="section-content">
                 <h2 class="fade-in">What Our Customers Say</h2>
@@ -286,32 +243,31 @@ require_once '../php/helpers/sessionConfig.php';
             </div>
         </section>
 
-
-        <section id="sustainability">
+        <section id="coffee-process">
             <div class="section-content">
-                <h2 class="fade-in">Our Commitment to Sustainability</h2>
-                <div class="sustainability-grid">
-                    <div class="sustainability-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Eco-friendly Packaging">
-                        <h3>Eco-friendly Packaging</h3>
-                        <p>All our to-go cups and packaging are made from recycled materials and are 100% compostable.
-                        </p>
+                <h2 class="fade-in">From Bean to Cup</h2>
+                <div class="process-grid">
+                    <div class="process-item fade-in">
+                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Sourcing">
+                        <h3>Ethical Sourcing</h3>
+                        <p>We partner directly with farmers to ensure fair prices and sustainable practices.</p>
                     </div>
-                    <div class="sustainability-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Water Conservation">
-                        <h3>Water Conservation</h3>
-                        <p>We've implemented water-saving techniques in our cafés and support water conservation
-                            projects in coffee-growing regions.</p>
+                    <div class="process-item fade-in">
+                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Roasting">
+                        <h3>Artisanal Roasting</h3>
+                        <p>Our master roasters bring out the unique flavors of each bean origin.</p>
                     </div>
-                    <div class="sustainability-item fade-in">
-                        <img src="../assets/imgs/hero-bg.jpg" alt="Community Support">
-                        <h3>Community Support</h3>
-                        <p>We regularly host events and workshops to educate our community about sustainable coffee
-                            practices and environmental conservation.</p>
+                    <div class="process-item fade-in">
+                        <img src="../assets/imgs/hero-bg.jpg" alt="Coffee Brewing">
+                        <h3>Precise Brewing</h3>
+                        <p>We use state-of-the-art equipment and techniques to brew the perfect cup every time.</p>
                     </div>
                 </div>
             </div>
         </section>
+
+
+
 
 
         <!-- Login Modal  -->

@@ -67,14 +67,13 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 3%; /* Reduced horizontal padding */
     max-width: 1400px; /* Added max-width */
     margin: 0 auto; /* Center the nav */
 }
 
 .logo {
     color: var(--white);
-    font-size: 2.2rem; /* Increased size */
+    font-size: 2rem; /* Increased size */
     font-weight: bold;
     font-family: 'Playfair Display', serif;
     text-decoration: none;
@@ -128,7 +127,8 @@ nav ul li a:hover::after {
 
 .auth-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.2rem;
+    margin-left: 5rem;
 }
 
 .auth-btn {

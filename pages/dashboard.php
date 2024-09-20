@@ -2,13 +2,14 @@
 require_once '../php/helpers/sessionConfig.php'; // Assuming you have a config file with session configuration
 require_once '../database/db_connection.php'; // Assuming you have a config file with database connection details
 
-if (!isset($_SESSION['user_id']) || ($_SESSION['role'] !== 'staff' && $_SESSION['role'] !== 'customer')) {
-    header('Location: ../pages');
+// Check if user is logged in and is an admin
+if ($_SESSION['role'] == 'staff') {
+    header('Location: ../pages/staffDashboard.php');
     exit();
 }
-if ($_SESSION['role'] == 'staff' && $_SESSION['role'] !== 'customer') {
-    header('Location: ../pages/admin_dashboard.php');
-    exit();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'customer') {
+    header('Location: ../pages');
 }
 
 $user_id = $_SESSION['user_id'];

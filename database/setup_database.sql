@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS orders (
     order_date DATETIME NOT NULL,
     status ENUM('pending', 'preparing', 'completed', 'canceled') DEFAULT 'pending',
     contact_info VARCHAR(255),
+    total_amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
-    total_amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00
 );
 
 -- Order Items Table
@@ -47,24 +47,4 @@ CREATE TABLE IF NOT EXISTS order_items (
     price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (item_id) REFERENCES items(item_id)
-);
-
--- Inventory Table (Optional)
-CREATE TABLE IF NOT EXISTS inventory (
-    inventory_id INT AUTO_INCREMENT PRIMARY KEY,
-    item_id INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (item_id) REFERENCES items(item_id)
-);
-
--- Reviews Table (Optional)
-CREATE TABLE IF NOT EXISTS reviews (
-    review_id INT AUTO_INCREMENT PRIMARY KEY,
-    item_id INT NOT NULL,
-    user_id INT NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),
-    comment TEXT,
-    review_date DATETIME NOT NULL,
-    FOREIGN KEY (item_id) REFERENCES items(item_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
