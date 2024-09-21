@@ -2,7 +2,9 @@
 
 Welcome to the **Brew Haven WebApp** repository! This project is designed to manage and showcase a variety of Coffee products. Below you will find the file structure and a brief description of each directory and its contents.
 
-![Brew Haven Banner](./assets/imgs/BrewHaven,jpeg)
+<p align="center">
+    <img src="./assets/imgs/BrewHaven.jpeg" alt="Brew Haven Banner" height="300">
+</p>
 
 ## ✨ Features
 
