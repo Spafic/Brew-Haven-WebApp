@@ -2,6 +2,8 @@
 
 Welcome to the **Brew Haven WebApp** repository! This project is designed to manage and showcase a variety of Coffee products. Below you will find the file structure and a brief description of each directory and its contents.
 
+![Brew Haven Banner](./assets/imgs/BrewHaven,jpeg)
+
 ## ✨ Features
 
 1. **🔒 Authentication and Security**: Secure user authentication with input sanitization to prevent SQL and JS injection.
