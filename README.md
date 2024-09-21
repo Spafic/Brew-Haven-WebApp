@@ -81,8 +81,8 @@ Brew-Haven-WebApp/
 │   ├── order_management.php   # 📦 Order handling operations.
 │   ├── register.php           # 📝 User registration.
 │   └── updateUserInfo.php     # 🛠️ Update user information.
-├── README.md                          # 📄 Project documentation.
-└── LICENSE                            # 📄 Project MIT LICENSE.
+├── README.md     # 📄 Project documentation.
+└── LICENSE       # 📄 Project MIT LICENSE.
 ```
 
 ## 🛠️ Technologies Used
