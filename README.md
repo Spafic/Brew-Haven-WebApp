@@ -2,6 +2,8 @@
 
 Welcome to the **Brew Haven WebApp** repository! This project is designed to manage and showcase a variety of Coffee products. Below you will find the file structure and a brief description of each directory and its contents.
 
+![Brew Haven Banner](./assets/imgs/BrewHaven,jpeg)
+
 ## ✨ Features
 
 1. **🔒 Authentication and Security**: Secure user authentication with input sanitization to prevent SQL and JS injection.
@@ -12,7 +14,7 @@ Welcome to the **Brew Haven WebApp** repository! This project is designed to man
 
 ## 🚀 Getting Started
 
-To get started with the Brew Haven WebApp, clone the repository and follow the setup instructions provided in the [`database/README.md`](https://github.com/your-username/repo-name/blob/main/database/README.md) file to initialize your database.
+To get started with the Brew Haven WebApp, clone the repository and follow the setup instructions provided in the [`database`](https://github.com/Spafic/Brew-Haven-WebApp/blob/main/database) directory to initialize your database.
 
 ```sh
 git clone https://github.com/Spafic/Brew-Haven-WebApp.git
