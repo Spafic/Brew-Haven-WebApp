@@ -12,7 +12,7 @@ Welcome to the **Brew Haven WebApp** repository! This project is designed to man
 
 ## 🚀 Getting Started
 
-To get started with the Brew Haven WebApp, clone the repository and follow the setup instructions provided in the [`database/`](https://github.com/your-username/repo-name/blob/main/database/) file to initialize your database.
+To get started with the Brew Haven WebApp, clone the repository and follow the setup instructions provided in the [`database`](https://github.com/Spafic/Brew-Haven-WebApp/blob/main/database) directory to initialize your database.
 
 ```sh
 git clone https://github.com/Spafic/Brew-Haven-WebApp.git
