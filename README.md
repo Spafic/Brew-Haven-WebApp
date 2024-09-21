@@ -75,7 +75,7 @@ Brew-Haven-WebApp/
 │   │   ├── orders_handler.php     # 📦 Order management backend.
 │   │   ├── stats_handler.php      # 📊 Fetch and process statistical data.
 │   │   └── users_handler.php      # 👤 User management operations.
-│   └── helpers/
+│   ├── helpers/
 │   │   └── sessionConfig.php      # 🔒 Session configuration.
 │   ├── login.php              # 🔑 User login and session handling.
 │   ├── order_management.php   # 📦 Order handling operations.
