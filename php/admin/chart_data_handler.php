@@ -4,14 +4,15 @@ require_once __DIR__ . '/../../database/db_connection.php';
 
 function getMonthlyOverviewData($pdo) {
     $query = "SELECT 
-                DATE_FORMAT(order_date, '%Y-%m') as month, 
-                COUNT(*) as orders, 
-                SUM(total_amount) as revenue
-              FROM orders 
-              WHERE order_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
-              GROUP BY DATE_FORMAT(order_date, '%Y-%m')
-              ORDER BY month";
-    
+                    DATE_FORMAT(order_date, '%Y-%m') as month, 
+                    COUNT(*) as orders, 
+                    SUM(total_amount) as revenue
+                  FROM orders 
+                  WHERE order_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+                    AND status = 'completed'
+                  GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+                  ORDER BY month";
+        
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
