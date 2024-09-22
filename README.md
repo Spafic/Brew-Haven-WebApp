@@ -32,14 +32,14 @@ You can run the project using either **XAMPP** or **WAMP**:
 1. Download and install [XAMPP](https://www.apachefriends.org/index.html).
 2. Start Apache and MySQL from the XAMPP control panel.
 3. Place the project files in the `htdocs` directory.
-4. Open your browser and navigate to `http://localhost/Brew-Haven-WebApp`.
+4. Open your browser and navigate to `http://localhost/Brew-Haven-WebApp/pages`.
 
 #### Using WAMP
 
 1. Download and install [WAMP](http://www.wampserver.com/en/).
 2. Start the WAMP server.
 3. Place the project files in the `www` directory.
-4. Open your browser and navigate to `http://localhost/Brew-Haven-WebApp`.
+4. Open your browser and navigate to `http://localhost/Brew-Haven-WebApp/pages`.
 
 ### Database Connection
 
